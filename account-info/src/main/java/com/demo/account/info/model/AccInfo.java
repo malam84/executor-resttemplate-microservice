@@ -15,6 +15,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * @author malam84
+ * 
+ **/
+
 @Getter
 @Setter
 @NoArgsConstructor

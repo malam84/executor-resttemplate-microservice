@@ -12,6 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.account.info.model.AccInfo;
 
+/**
+ * 
+ * @author malam84
+ * 
+ **/
+
 @Repository
 @Transactional
 public interface AccountInfoRepository extends JpaRepository<AccInfo, Long> {

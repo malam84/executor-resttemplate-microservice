@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
  
+/**
+ * 
+ * @author malam84
+ * 
+ **/
+
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler 
 {

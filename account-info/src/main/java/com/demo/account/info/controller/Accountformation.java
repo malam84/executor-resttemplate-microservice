@@ -16,6 +16,12 @@ import com.demo.account.info.exception.RecordNotFoundException;
 import com.demo.account.info.model.AccInfo;
 import com.demo.account.info.service.AccountInfoService;
 
+/**
+ * 
+ * @author malam84
+ * 
+ **/
+
 @RestController
 @RequestMapping("/api")
 public class Accountformation {
@@ -30,9 +36,11 @@ public class Accountformation {
 	 * 
 	 * @param accNo
 	 * @return accInfo object
+	 * @accinfobyaccno API fetching account info based on account number
+	 * @RecordNotFoundException throw if account no not exist
 	 * 
 	 */
-	@RequestMapping(value="/accinfo", method = RequestMethod.GET)
+	@RequestMapping(value="/accinfobyaccno", method = RequestMethod.GET)
 	public ResponseEntity<AccInfo> getAccountInfoByAccNo(@RequestParam Integer accNo) {
 		
 		Optional<AccInfo> accInfo = accountInfoService.findCustInfoByAccNo(accNo);
@@ -48,16 +56,18 @@ public class Accountformation {
 	 * 
 	 * @param custId
 	 * @return accInfo object
+	 * @accinfobycustid API fetching account info based on customer id
+	 * @RecordNotFoundException throw if customer id not exist
 	 * 
 	 */
-	@RequestMapping(value="/accinfodetail", method = RequestMethod.GET)
+	@RequestMapping(value="/accinfobycustid", method = RequestMethod.GET)
 	public ResponseEntity<List<AccInfo>> getAccountInfoByCustId(@RequestParam String custId) {
 		
 		Optional<List<AccInfo>> accInfo = accountInfoService.findCustInfoByCustId(custId);
 		if (accInfo.isPresent()) {
 		    return new ResponseEntity<>(accInfo.get(), HttpStatus.OK);
 		} else {
-		    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new RecordNotFoundException("Invalid customer id " + custId);
 	    }
 	}
 }

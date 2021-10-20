@@ -58,13 +58,13 @@ public class CustomerInformation {
 			int k = i;
 			//Submit tasks to be executed by thread pool
 			Future<AccInfoResDto> future = executor.submit(() -> {
-        		return callExternalServices(accIdlst.get(k), "http://localhost:8081/api/accinfo");
+        		return callExternalServices(accIdlst.get(k), "http://localhost:8081/api/accinfobyaccno");
      		});
 			futureLst.add(future);
 		} 
 
 		//Implementing sync call to external services without any blocking by executor
-		AccInfoResDto  accObj = restTemplate.getForObject("http://localhost:8081/api/accinfo?accNo="+10001, AccInfoResDto.class);
+		AccInfoResDto  accObj = restTemplate.getForObject("http://localhost:8081/api/accinfobyaccno?accNo="+10001, AccInfoResDto.class);
 		accInfoRes.add(accObj);
 		
 		
@@ -119,7 +119,7 @@ public class CustomerInformation {
 		customerInfo.setCustomerName("xyz");
 		customerInfo.setCustomerEmail("xyz@gmail.com");
 		customerInfo.setDob(LocalDate.parse("1985-01-07"));
-		List<AccInfoResDto> accInfolst = this.exchangeAsList("http://localhost:8081/api/accinfodetail?custId="+custId,  new ParameterizedTypeReference<List<AccInfoResDto>>() {});
+		List<AccInfoResDto> accInfolst = this.exchangeAsList("http://localhost:8081/api/accinfobycustid?custId="+custId,  new ParameterizedTypeReference<List<AccInfoResDto>>() {});
 		customerInfo.setAccInfo(accInfolst);
 		return new ResponseEntity<> (customerInfo, HttpStatus.OK);
 	}
