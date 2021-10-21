@@ -34,5 +34,5 @@ $ mvn spring-boot:run
    <img width="1030" alt="test2" src="https://user-images.githubusercontent.com/42507151/138189957-6cf38a54-7ec9-4d3a-b4aa-eedd1e6f6d08.png">
  
 2. customerdetail api fetch account infomration synchronously <br>
-   #http://localhost:8080/api/customerdetail?custId=cust102
+   <b> http://localhost:8080/api/customerdetail?custId=cust102 </b>
 
