@@ -33,8 +33,14 @@ public class CustomerInformation {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	/**
+	 * @input Please provide list of account no to fetch parallelly
+	 * @return list of account information details
+	 * @ExecutionException, @RecordNotFoundException
+	 * @restTemplate client call
+	 * */
 	@RequestMapping(value="/accountexecutorsev", method=RequestMethod.POST)
-	public ResponseEntity<List<AccInfoResDto>> getCustomerInformation(@RequestBody List<Integer> accIdlst) {
+	public ResponseEntity<List<AccInfoResDto>> getCustomerInformation(@RequestBody List<Integer> accNolst) {
 		
 		
 		//ConcurrentHashMap<Integer, Object> accInfoResp = new ConcurrentHashMap<>();
@@ -54,11 +60,11 @@ public class CustomerInformation {
 		 * Create a list to hold the Future object associated with Callable
 		 */
 		List<Future<AccInfoResDto>>  futureLst= new ArrayList<Future<AccInfoResDto>>();
-		for (int i = 0; i < accIdlst.size(); i++) {
+		for (int i = 0; i < accNolst.size(); i++) {
 			int k = i;
 			//Submit tasks to be executed by thread pool
 			Future<AccInfoResDto> future = executor.submit(() -> {
-        		return callExternalServices(accIdlst.get(k), "http://localhost:8081/api/accinfobyaccno");
+        		return callExternalServices(accNolst.get(k), "http://localhost:8081/api/accinfobyaccno");
      		});
 			futureLst.add(future);
 		} 
@@ -95,22 +101,24 @@ public class CustomerInformation {
 	  return  new ResponseEntity<>(accInfoRes, HttpStatus.OK);
     }
 
-	/*
+	/**
 	 * 
 	 * @Executor Callable method
-	 * @calling external using rest template
+	 * @calling external api using rest template
 	 * @return AccInfoResDto
 	 * 
-	*/
+	 */
 	public AccInfoResDto callExternalServices(Integer value, String url) {
 		String apiUrl = url + "?accNo=" +value;
 		AccInfoResDto accInfo = restTemplate.getForObject(apiUrl, AccInfoResDto.class);
 		return accInfo;
 	}
 	
-	/*
+	/**
 	 * @customerdetail API is an example to call microservices synchronously
-	 * */
+	 * @input custId
+	 * @return CustomerInfo object
+	 */
 	@RequestMapping(value="/customerdetail", method = RequestMethod.GET)
 	public ResponseEntity<CustomerInfo> getCustomerDetail(@RequestParam String custId) {
 		
