@@ -22,7 +22,8 @@ Clone the code using $git clone git@github.com:malam84/executor-resttemplate-mic
 <br/>
 <br/>
 <b>customer-info Services: </b>
-<br/><br/>
+<hr>
+<br/>
 <b>Step1:</b> Please go inside customer-info folder<br/><br/>
 <b>Step2:</b> Run below maven command <br>
 $ mvn -DskipTests clean install<br>
